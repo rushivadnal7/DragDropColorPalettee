@@ -1,0 +1,20 @@
+.card{
+    margin: 0.5rem 1rem;
+    border: 1px solid var(--clr-strong);
+}
+
+.card-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card__image{
+    width: 12rem;
+    height: var(--size-8xl);
+}
+
+.card-front h2{
+    /* height: var(--size-6xl); */
+}

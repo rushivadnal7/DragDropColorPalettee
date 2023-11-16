@@ -1,0 +1,18 @@
+@media (min-width:475px) {
+    .api__section{
+        grid-template-columns: 1fr 1fr ;
+    }
+}
+@media (min-width:640px) {
+    .api__section{
+        grid-template-columns: 1fr 1fr ;
+    }
+}
+
+.api__section {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    border: 1px solid var(--clr-strong);
+
+}

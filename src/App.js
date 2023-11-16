@@ -1,25 +1,68 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import '../src/components/util.css'
+import { useEffect, useState } from 'react';
+import Card from './components/Card';
+import Main from './components/Main';
+import Apicontent from './components/Apicontent';
+
 
 function App() {
+
+  const api = "https://restcountries.com/v3.1/all"
+
+  const [countryData, setcountryData] = useState([]);
+
+  const fetchApiData = async (url) => {
+    try {
+      const response = await fetch(url);
+      const data = await response.json()
+
+      const countryArray = data.map((obj) => {
+        const capital = Array.isArray(obj.capital) ? obj.capital[0] : "capital not found";
+
+        const languages = obj.languages ? Object.values(obj.languages) : "languages not found";
+        // console.log(obj)
+        return {
+          name: obj.name.common,
+          flagdata: obj.flags.png,
+          population: obj.population,
+          languageVal: languages,
+          capitalCity: capital
+        }
+      })
+
+      // console.log("Country Array" + countryArray)
+      // console.log(countryData[0].languageVal)
+      setcountryData(countryArray)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchApiData(api)
+  }, [])
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <section className='app__section'>
+        <Main />
+        {
+          countryData.length > 0 && <Apicontent>
+            {countryData.map((data) => {
+              return <div className='card '>
+                <Card name={data.name} imgUrl={data.flagdata} LangVal={data.languageVal} capital={data.capitalCity} population={data.population} ></Card>
+              </div>
+            })}
+          </Apicontent>
+        }
+
+      </section>
+
+    </>
   );
 }
+
 
 export default App;
